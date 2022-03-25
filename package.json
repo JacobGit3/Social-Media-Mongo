@@ -1,0 +1,24 @@
+{
+  "name": "social-media-mongo",
+  "version": "1.0.0",
+  "description": "A basic social media backend template created with mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacobGit3/Social-Media-Mongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacobGit3/Social-Media-Mongo/issues"
+  },
+  "homepage": "https://github.com/JacobGit3/Social-Media-Mongo#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
+  }
+}
