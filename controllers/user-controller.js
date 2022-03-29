@@ -7,7 +7,10 @@ const userController = {
       .select('-__v')
       .sort({ _id: -1 })
       .then(dbUserData => res.json(dbUserData))
-      .catch(err => res.status(400).json(err));
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
   },
 
   // GET single User by _id
@@ -16,10 +19,6 @@ const userController = {
       .populate({
         path: 'thoughts',
         select: '-__v'
-      })
-      .populate({
-        path: 'friends',
-        select:'-__v'
       })
       .select('-__v')
       .then(dbUserData => {
@@ -54,18 +53,21 @@ const userController = {
 
   // DELETE User by _Id (and all associated thoughts)
   removeUser({ params }, res) {
-    Thought.deleteMany({ userId: params.id })
-      .then(() => {
-        User.findOneAndDelete({ _id: params.id })
-          .then(dbUserData => {
-            if (!dbUserData) {
-              res.status(404).json({ message: 'No User found with this id!' });
-              return;
-            }
-            res.json(dbUserData);
-          });
+    User.findOneAndDelete({ _id: params.id })
+      .then(dbUserData => {
+        if (!dbUserData) {
+          res.status(404).json({ message: 'No User found with this id!' });
+          return;
+        }
+        return(dbUserData);
       })
-      .catch(err => res.json(err));
+      .then(dbUserData => {
+        Thought.deleteMany({
+          username: dbUserData.username
+        })
+        res.json(dbUserData)
+      })
+      .catch(err => res.staus(400).json(err));
   },
 
   // POST a new friend to Users friend list

@@ -10,5 +10,6 @@ CURRENT ERRORS
 - add/delete friends from user
     gives 404 error
 
-- adding reactions to thoughts
-    gives validation error on reactionId
+- deleting a user 
+    does not delete associated thoughts
+    old version deleted all thougths 
