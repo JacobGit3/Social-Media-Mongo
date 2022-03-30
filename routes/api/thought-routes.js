@@ -39,7 +39,7 @@ router
 
 // Routes for path api/thoughts/:thoughtId/reactions/:reactionId
 router
-  .route("/:thoughtId/reactions/:reationId")
+  .route("/:thoughtId/reactions/:reactionId")
   .delete(removeReaction)
 
 module.exports = router;
