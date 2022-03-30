@@ -17,7 +17,11 @@ const userController = {
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate({
-        path: 'thoughts',
+        path: 'thought',
+        select: '-__v'
+      })
+      .populate({
+        path: 'friends',
         select: '-__v'
       })
       .select('-__v')
@@ -62,12 +66,16 @@ const userController = {
         return(dbUserData);
       })
       .then(dbUserData => {
-        Thought.deleteMany({
-          username: dbUserData.username
-        })
-        res.json(dbUserData)
+        Thought.deleteMany({ username: dbUserData.username })
+          .then(() => {
+            res.json(dbUserData);
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+          });
       })
-      .catch(err => res.staus(400).json(err));
+      .catch(err => res.status(400).json(err));
   },
 
   // POST a new friend to Users friend list
